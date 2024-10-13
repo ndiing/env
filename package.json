@@ -1,0 +1,15 @@
+{
+    "name": "@ndiinginc/env",
+    "version": "1.0.3",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "directories": {
+        "lib": "lib"
+    },
+    "description": "<a name=\"env\"></a>"
+}
