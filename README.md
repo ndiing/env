@@ -1,9 +1,18 @@
-<a name="env"></a>
+<a name="module_env"></a>
 
 ## env
+<a name="module_env.read"></a>
 
-Memuat variabel lingkungan dari file .env.
-Jika file tidak ada, file baru akan dibuat dengan konten kosong.
-Variabel lingkungan yang ditemukan dalam file akan ditambahkan ke `process.env`.
+### env.read([filename])
+Membaca file .env dan mengatur variabel lingkungan (environment variables) ke dalam `process.env`.
 
-**Kind**: global variable
+**Kind**: static method of [<code>env</code>](#module_env)  
+**Throws**:
+
+- <code>Error</code> - Melempar error jika terjadi kesalahan saat membaca file.
+
+
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| [filename] | <code>string</code> | <code>&quot;\&quot;.env\&quot;&quot;</code> | Nama file yang akan dibaca. Secara default, akan membaca ".env". |
+
