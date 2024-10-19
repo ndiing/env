@@ -15,10 +15,14 @@ const fs = require("fs");
 function read(filename = ".env") {
     const env = fs.readFileSync(path.join(process.cwd(),filename), { encoding: "utf8" });
 
-    for (const [, name, value1, value2, value3, value4] of env.matchAll(/([A-Z_]+)\s*=\s*(?:"([\s\S]+?)"|'([\s\S]+?)'|`([\s\S]+?)`|([\s\S]+?))\s*(?:#|\n|$)/g)) {
+    for (const [, name, value1, value2, value3, value4] of env.matchAll(/^([A-Z_]+)\s*=\s*(?:"([\s\S]+?)"|'([\s\S]+?)'|`([\s\S]+?)`|([\s\S]+?))\s*(?:#|\n|$)/gm)) {
         const value = value4 || value3 || value2 || value1;
         process.env[name] = value;
+
+        // console.log({name,value})
     }
 }
 
 module.exports = read;
+
+// read()
