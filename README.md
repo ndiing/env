@@ -12,7 +12,7 @@
 <a name="module_env..read"></a>
 
 ### env~read([filename]) ⇒ <code>string</code> \| <code>undefined</code>
-Membaca konten file dengan nama yang diberikan. 
+Membaca konten file dengan nama yang diberikan.
 Secara default, ini membaca file ".env".
 
 **Kind**: inner method of [<code>env</code>](#module_env)  
@@ -25,7 +25,7 @@ Secara default, ini membaca file ".env".
 <a name="module_env..write"></a>
 
 ### env~write([filename], data)
-Menulis data ke dalam file yang diberikan. 
+Menulis data ke dalam file yang diberikan.
 Jika direktori tidak ada, direktori akan dibuat.
 
 **Kind**: inner method of [<code>env</code>](#module_env)  
@@ -38,7 +38,7 @@ Jika direktori tidak ada, direktori akan dibuat.
 <a name="module_env..parse"></a>
 
 ### env~parse(data, [callback]) ⇒ <code>Object</code>
-Mem-parsing data dari format string menjadi objek. 
+Mem-parsing data dari format string menjadi objek.
 Menggunakan callback untuk setiap pasangan nama dan nilai.
 
 **Kind**: inner method of [<code>env</code>](#module_env)  
@@ -65,7 +65,7 @@ Mengonversi objek menjadi format string yang sesuai untuk file .env.
 <a name="module_env..execute"></a>
 
 ### env~execute([filename], [options])
-Mengeksekusi proses membaca, mengupdate, dan menulis kembali file .env. 
+Mengeksekusi proses membaca, mengupdate, dan menulis kembali file .env.
 Juga mengatur variabel lingkungan dari file.
 
 **Kind**: inner method of [<code>env</code>](#module_env)  
