@@ -6,13 +6,13 @@ const fs = require("fs");
  */
 
 /**
- * Membaca konten file dengan nama yang diberikan. 
+ * Membaca konten file dengan nama yang diberikan.
  * Secara default, ini membaca file ".env".
- * 
+ *
  * @param {string} [filename=".env"] - Nama file yang akan dibaca.
  * @returns {string | undefined} - Konten file sebagai string, atau undefined jika terjadi kesalahan.
  */
-function read(filename = ".env") {
+function read(filename) {
     let data;
     try {
         data = fs.readFileSync(filename, { encoding: "utf8" });
@@ -21,13 +21,13 @@ function read(filename = ".env") {
 }
 
 /**
- * Menulis data ke dalam file yang diberikan. 
+ * Menulis data ke dalam file yang diberikan.
  * Jika direktori tidak ada, direktori akan dibuat.
- * 
+ *
  * @param {string} [filename=".env"] - Nama file yang akan ditulis.
  * @param {string} data - Data yang akan ditulis ke dalam file.
  */
-function write(filename = ".env", data) {
+function write(filename, data) {
     let dirname = path.dirname(filename);
     try {
         fs.readdirSync(dirname);
@@ -38,9 +38,9 @@ function write(filename = ".env", data) {
 }
 
 /**
- * Mem-parsing data dari format string menjadi objek. 
+ * Mem-parsing data dari format string menjadi objek.
  * Menggunakan callback untuk setiap pasangan nama dan nilai.
- * 
+ *
  * @param {string} data - Data string yang akan diparsing.
  * @param {function} [callback=(name, value) => {}] - Callback yang dipanggil untuk setiap nama dan nilai.
  * @returns {Object} - Objek yang berisi pasangan nama dan nilai.
@@ -57,7 +57,7 @@ function parse(data, callback = (name, value) => {}) {
 
 /**
  * Mengonversi objek menjadi format string yang sesuai untuk file .env.
- * 
+ *
  * @param {string} data - Data string yang akan diupdate.
  * @param {Object} options - Objek yang berisi pasangan nama dan nilai untuk di-stringify.
  * @returns {string} - Data yang telah diupdate sebagai string.
@@ -66,9 +66,11 @@ function stringify(data, options) {
     const temp = options;
     for (const name in options) {
         let value = String(options[name]);
-        const regex=new RegExp(`(${name})(\\s*=\\s*)(?:"([\\s\\S]+?)"|'([\\s\\S]+?)'|\`([\\s\\S]+?)\`|([\\s\\S]+?))(\\s*)(?:(#|\\n|$))`, "gm")
+        const regex = new RegExp(`(${name})(\\s*=\\s*)(?:"([\\s\\S]+?)"|'([\\s\\S]+?)'|\`([\\s\\S]+?)\`|([\\s\\S]+?))(\\s*)(?:(#|\\n|$))`, "gm");
 
-        if(regex.test(data)){delete temp[name]}
+        if (regex.test(data)) {
+            delete temp[name];
+        }
 
         // data = data.replace(regex, ($, $name, $1, $value1, $value2, $value3, $value4, $2, $end) => {
         //     delete temp[name];
@@ -95,14 +97,15 @@ function stringify(data, options) {
 }
 
 /**
- * Mengeksekusi proses membaca, mengupdate, dan menulis kembali file .env. 
+ * Mengeksekusi proses membaca, mengupdate, dan menulis kembali file .env.
  * Juga mengatur variabel lingkungan dari file.
- * 
+ *
  * @param {string} [filename=".env"] - Nama file yang akan diproses.
  * @param {Object} [options={}] - Opsi yang berisi pasangan nama dan nilai untuk diupdate.
  */
 function execute(filename = ".env", options = {}) {
-    let data = read(filename)||'';
+    filename = path.join(process.cwd(), filename);
+    let data = read(filename) || "";
     data = stringify(data, options);
     write(filename, data);
     options = parse(data, (name, value) => {
