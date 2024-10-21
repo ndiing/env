@@ -98,20 +98,23 @@ function stringify(data, options) {
 
 /**
  * Mengeksekusi proses membaca, mengupdate, dan menulis kembali file .env.
- * Juga mengatur variabel lingkungan dari file.
+ * Juga mengatur variabel lingkungan dari file ke `process.env`.
  *
- * @param {string} [filename=".env"] - Nama file yang akan diproses.
- * @param {Object} [options={}] - Opsi yang berisi pasangan nama dan nilai untuk diupdate.
+ * @param {string} [filename=".env"] - Nama file .env yang akan diproses.
+ * @param {Object} [env={}] - Objek berisi pasangan nama dan nilai variabel yang akan diupdate dalam file .env.
+ * @param {Object} [options={}] - Opsi tambahan.
+ * @param {string} [options.dir=process.cwd()] - Direktori di mana file .env berada.
  */
-function execute(filename = ".env", options = {}) {
-    filename = path.join(process.cwd(), filename);
+function execute(filename = ".env", env = {},options={}) {
+    const {dir=process.cwd()} = options
+    filename = path.join(dir, filename);
     let data = read(filename) || "";
-    data = stringify(data, options);
+    data = stringify(data, env);
     write(filename, data);
-    options = parse(data, (name, value) => {
+    env = parse(data, (name, value) => {
         process.env[name] = value;
     });
-    // console.log(options);
+    // console.log(env);
 }
 
 module.exports = execute;
